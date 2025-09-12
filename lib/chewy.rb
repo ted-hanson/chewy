@@ -103,10 +103,12 @@ module Chewy
     end
 
     def use_primary!
+      Chewy.configuration[:prefix] = Chewy.configuration[:prefix]
       Chewy.current[:chewy_client] = Chewy::ElasticClient.new
     end
 
     def use_replica!
+      Chewy.configuration[:prefix] = Chewy.replica_configuration[:prefix]
       Chewy.current[:chewy_client] = Chewy::ElasticClientReplica.new
     end
 
