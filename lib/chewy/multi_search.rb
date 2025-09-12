@@ -13,7 +13,7 @@ module Chewy
     # @param queries [Array<Chewy::Search::Request>]
     # @option [Elasticsearch::Transport::Client] :client (Chewy.client)
     #   The Elasticsearch client that should be used for issuing requests.
-    def initialize(queries, client: Chewy.client)
+    def initialize(queries, client: lambda { Chewy.client })
       @client = client
       @queries = Array(queries)
     end
@@ -52,7 +52,7 @@ module Chewy
         [rendered.except(:body), rendered[:body]]
       end
 
-      client.msearch(body: body)
+      client.call.msearch(body: body)
     end
   end
 
